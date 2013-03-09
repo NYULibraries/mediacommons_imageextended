@@ -18,8 +18,6 @@ module_load_include('inc', 'mediacommons_imageextended', 'includes/mediacommons_
  */
 function theme_mediacommons_imageextended_hires($variables) {
   
-  dpm(__FUNCTION__);
-  
   $file = $variables['file'];
   $module_path = drupal_get_path('module', 'mediacommons_imageextended');
   $fid = 'id-'. $file['fid'];
@@ -59,7 +57,6 @@ function theme_mediacommons_imageextended_hires($variables) {
 }
 
 function theme_mediacommons_imageextended_thumbnail($variables) {
-  dpm(__FUNCTION__);
   
   $item = $variables['file'];
   $classes = array('thumbnail',);
@@ -78,18 +75,14 @@ function theme_mediacommons_imageextended_thumbnail($variables) {
 }
 
 function theme_mediacommons_imageextended_thumbnail_nodelink($variables) {
-  dpm(__FUNCTION__);
   return l(theme('mediacommons_imageextended_thumbnail', $variables), url('node/' . $variables['file']['nid'], array('absolute' => TRUE)), array('html' => TRUE));
 }
 
 function theme_mediacommons_imageextended_admin_thumbnail($variables) {
-  dpm(__FUNCTION__);
   return theme('mediacommons_imageextended_thumbnail', $variables);
 }
 
 function theme_mediacommons_imageextended_original($variables) {
-  
-  dpm(__FUNCTION__);
   
   $item = $variables['file'];
 
@@ -111,8 +104,6 @@ function theme_mediacommons_imageextended_original($variables) {
 
 
 function theme_mediacommons_imageextended_widget($variables) {
-  
-  dpm(__FUNCTION__);
   
   $element = $variables['element'];
   $output = '';
@@ -140,8 +131,6 @@ function theme_mediacommons_imageextended_widget($variables) {
 
 
 function theme_mediacommons_imageextended_representative_image($variables) {
-  
-  dpm(__FUNCTION__);
   
   $item = $variables['file'];
 

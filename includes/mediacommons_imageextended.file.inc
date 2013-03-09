@@ -15,15 +15,7 @@
 /** Given a file, return the path the image thumbnail used while editing */
 function mediacommons_imageextended_file_path($file, $create_thumb = FALSE, $type = 'thumbnail') {
   
-  dpm(__FUNCTION__);
-  dpm('file');
-  dpm($file);
-  dpm('create_thumb ' . $create_thumb);
-  dpm('type: ' . $type);
-  
   $filepath = file_default_scheme() . ':/' . '/mediacommons_imageextended/' . mediacommons_imageextended_file_filename_convert($file);
-  
-  dpm('filepath: ' . $filepath);
   
   if ($create_thumb) {
     
@@ -63,19 +55,8 @@ function mediacommons_imageextended_file_create_derivative_image($source_file, $
   /** If the destination file already exists, see if it needs to be regenerated. */
   if (is_file($destination_file)) {
     
-    dpm('If the destination file already exists, see if it needs to be regenerated');
-        
-    dpm('width: ' . $width);
-    
-    dpm('height: ' . $height);
-    
     $source_info = mediacommons_imageextended_file_image_get_info($source_file);
-    
-    dpm($source_info);
-    
     $destination_info = mediacommons_imageextended_file_image_get_info($destination_file);
-    
-    dpm($destination_info);
     
     if (
       $destination_info['width'] != $width && $destination_info['height'] != $height &&

@@ -21,12 +21,16 @@ function mediacommons_imageextended_djatoka_request($file) {
   if ($response->code == '200' && isset($response->data) ) { 
     return drupal_json_decode($response->data); 
   }
+  
   else {
+    
     watchdog('mediacommons_imageextended', 'Error requesting image metadata from service. @message (error code @code). Please verify that the ' . l('Image extended', 'admin/config/media/mediacommons') . ' module is properly configured. ', array('@message' => $response->error, '@code' => $response->code), WATCHDOG_ERROR);
+    
     return array(
       'message' => isset($response->status_message) ? $response->status_message : $response->error,
       'error' => $response->error,
       'code' => $response->code,
     );
+
   }
 }

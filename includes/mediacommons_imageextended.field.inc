@@ -151,7 +151,8 @@ function mediacommons_imageextended_field_widget_process($element, &$form_state,
         /** dpm($element['#value']['width']); */
         /** dpm($element['#value']['height']); */
 
-        form_set_error('mediacommons_imageextended', t('Error requesting image metadata from Djakota service. @message (error code @code).', array('@message' => $djatoka['message'], '@error' => $djatoka['error'])));
+        // Set watchdog error
+        // form_set_error('mediacommons_imageextended', t('Error requesting image metadata from Djakota service. @message (error code @code).', array('@message' => $djatoka['message'], '@error' => $djatoka['error'])));
         
         $variables['extended_width'] = 
         $variables['extended_height'] =  

@@ -1,2 +1,2 @@
-mediacommons_imageextended
+MediaCommons Image Extended
 ==========================

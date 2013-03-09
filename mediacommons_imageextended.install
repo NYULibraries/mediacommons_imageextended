@@ -86,6 +86,7 @@ function mediacommons_imageextended_field_schema($field) {
 function mediacommons_imageextended_requirements($phase) {
   
   $requirements = array();
+  
   $t = get_t();
 
   switch ($phase) {
@@ -123,8 +124,9 @@ function mediacommons_imageextended_requirements($phase) {
 
       /** ImageMagick must be compiled with JP2 support. */
       $source_file = drupal_get_path('module', 'mediacommons_imageextended') . '/images/test.jp2';
-      $destination_file = variable_get('file_public_path', conf_path() . '/files/') .'/mediacommons-image-extended-imagemagick.jpg';
       
+      $destination_file = variable_get('file_public_path', conf_path() . '/files/') .'/mediacommons-image-extended-imagemagick.jpg';
+
       if (mediacommons_imageextended_file_test_imagemagick($source_file, $destination_file) ) {
         $requirements['mediacommons_imageextended_imagemagick_jp2'] = array(
           'title' => $t('Image extended JP2 Support'),
@@ -132,7 +134,6 @@ function mediacommons_imageextended_requirements($phase) {
           'severity' => REQUIREMENT_OK,
         );
       }
-      
       else {
         $requirements['mediacommons_imageextended_imagemagick_jp2'] = array(
           'title' => $t('Image extended JP2 Support'),
@@ -149,6 +150,7 @@ function mediacommons_imageextended_requirements($phase) {
 function mediacommons_imageextended_enable() {
   
   $source_file = drupal_get_path('module', 'mediacommons_imageextended') . '/images/test.jp2';
+  
   $destination_file = variable_get('file_public_path', conf_path() . '/files/') .'mediacommons_imageextended_thumbs/imagemagick_jp2_test.jpg';
   
   if (image_get_toolkit() != 'imagemagick') {
@@ -194,6 +196,7 @@ function mediacommons_imageextended_enable() {
   variable_set('mediacommons_imageextended_djatoka_service_host', 'http://dl-img.home.nyu.edu/adore-djatoka');
   variable_set('mediacommons_imageextended_djatoka_service', 'http://dl-img.home.nyu.edu/adore-djatoka');
   variable_set('mediacommons_imageextended_djatoka_metadataurl', 'http://dl-img.home.nyu.edu/adore-djatoka?');
+  
   variable_set('mediacommons_imageextended_openlayers',  
     serialize ( array( 
       'plugins' => array( 
