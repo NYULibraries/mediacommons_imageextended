@@ -2,16 +2,16 @@
 
 /**
  * @file
- * mediacommons_image_extended module install functions
+ * mediacommons_imageextended module install functions
  */
 
 // http://fourkitchens.com/blog/2013/02/07/responsive-images-drupal-implementation
  
 /** Require files */
-module_load_include('inc', 'mediacommons_image_extended', 'includes/mediacommons_image_extended.file');
+module_load_include('inc', 'mediacommons_imageextended', 'includes/mediacommons_imageextended.file');
 
 /** Implements hook_field_schema(). */
-function mediacommons_image_extended_field_schema($field) {
+function mediacommons_imageextended_field_schema($field) {
   return array(
       'columns' => array(
         'fid' => array(
@@ -83,7 +83,7 @@ function mediacommons_image_extended_field_schema($field) {
 }
 
 /** Implementation of hook_requirements(). */
-function mediacommons_image_extended_requirements($phase) {
+function mediacommons_imageextended_requirements($phase) {
   
   $requirements = array();
   $t = get_t();
@@ -96,7 +96,7 @@ function mediacommons_image_extended_requirements($phase) {
     case 'runtime':
     
       if (image_get_toolkit() == 'imagemagick') {
-        $requirements['mediacommons_image_extended_imagemagick'] = array(
+        $requirements['mediacommons_imageextended_imagemagick'] = array(
           'title' => $t('Image extended toolkit'),
           'value' => $t('ImageMagick toolkit selected.'),
           'severity' => REQUIREMENT_OK,
@@ -104,7 +104,7 @@ function mediacommons_image_extended_requirements($phase) {
       }
       
       else if (!in_array('imagemagick', array_keys(image_get_available_toolkits()))) {
-        $requirements['mediacommons_image_extended_imagemagick'] = array(
+        $requirements['mediacommons_imageextended_imagemagick'] = array(
           'title' => $t('Image extended toolkit'),
           'value' => $t('Imagemagick image toolkit not available.'),
           'severity' => REQUIREMENT_ERROR,
@@ -113,7 +113,7 @@ function mediacommons_image_extended_requirements($phase) {
       }
       
       else {
-        $requirements['mediacommons_image_extended_imagemagick'] = array(
+        $requirements['mediacommons_imageextended_imagemagick'] = array(
           'title' => $t('Image extended toolkit'),
           'value' => $t('ImageMagick toolkit not selected.'),
           'severity' => REQUIREMENT_ERROR,
@@ -122,11 +122,11 @@ function mediacommons_image_extended_requirements($phase) {
       }
 
       /** ImageMagick must be compiled with JP2 support. */
-      $source_file = drupal_get_path('module', 'mediacommons_image_extended') . '/images/test.jp2';
+      $source_file = drupal_get_path('module', 'mediacommons_imageextended') . '/images/test.jp2';
       $destination_file = variable_get('file_public_path', conf_path() . '/files/') .'/mediacommons-image-extended-imagemagick.jpg';
       
-      if (mediacommons_image_extended_file_test_imagemagick($source_file, $destination_file) ) {
-        $requirements['mediacommons_image_extended_imagemagick_jp2'] = array(
+      if (mediacommons_imageextended_file_test_imagemagick($source_file, $destination_file) ) {
+        $requirements['mediacommons_imageextended_imagemagick_jp2'] = array(
           'title' => $t('Image extended JP2 Support'),
           'value' => $t('ImageMagick can convert JP2 files.'),
           'severity' => REQUIREMENT_OK,
@@ -134,7 +134,7 @@ function mediacommons_image_extended_requirements($phase) {
       }
       
       else {
-        $requirements['mediacommons_image_extended_imagemagick_jp2'] = array(
+        $requirements['mediacommons_imageextended_imagemagick_jp2'] = array(
           'title' => $t('Image extended JP2 Support'),
           'value' => $t('ImageMagick cannot convert JP2 files.'),
           'severity' => REQUIREMENT_ERROR,
@@ -146,10 +146,10 @@ function mediacommons_image_extended_requirements($phase) {
 }
 
 /** Implementation of hook_enable(). */
-function mediacommons_image_extended_enable() {
+function mediacommons_imageextended_enable() {
   
-  $source_file = drupal_get_path('module', 'mediacommons_image_extended') . '/images/test.jp2';
-  $destination_file = variable_get('file_public_path', conf_path() . '/files/') .'mediacommons_image_extended_thumbs/imagemagick_jp2_test.jpg';
+  $source_file = drupal_get_path('module', 'mediacommons_imageextended') . '/images/test.jp2';
+  $destination_file = variable_get('file_public_path', conf_path() . '/files/') .'mediacommons_imageextended_thumbs/imagemagick_jp2_test.jpg';
   
   if (image_get_toolkit() != 'imagemagick') {
     drupal_set_message(t('Image extended requires ImageMagick to be the selected image toolkit. Will try to select it for you'), 'warning');
@@ -169,7 +169,7 @@ function mediacommons_image_extended_enable() {
       
       drupal_set_message(t('ImageMagick path to the "convert" binary was set to: convert'), 'warning');
       
-      watchdog('mediacommons_image_extended', 'ImageMagick path to the "convert" binary was set to: convert');
+      watchdog('mediacommons_imageextended', 'ImageMagick path to the "convert" binary was set to: convert');
 
       /** Image quality */
       variable_set('imagemagick_quality', '75');  
@@ -179,7 +179,7 @@ function mediacommons_image_extended_enable() {
     
       drupal_set_message(t('Image extended was able to select ImageMagick as the default image toolkit.'), 'warning');
       
-      watchdog('mediacommons_image_extended', 'ImageMagick has been properly set-up');
+      watchdog('mediacommons_imageextended', 'ImageMagick has been properly set-up');
   
     }
     else {
@@ -187,14 +187,14 @@ function mediacommons_image_extended_enable() {
     }
   }
 
-  else if (!mediacommons_image_extended_file_test_imagemagick($source_file, $destination_file)) {
+  else if (!mediacommons_imageextended_file_test_imagemagick($source_file, $destination_file)) {
     drupal_set_message(t('Image extended was unable to create a test image. Please verify that the ' . l('ImageMagick toolkit', 'admin/config/media/image-toolkit') . ' is properly configured.'), 'warning');
   }
   
-  variable_set('mediacommons_image_extended_djatoka_service_host', 'http://dl-img.home.nyu.edu/adore-djatoka');
-  variable_set('mediacommons_image_extended_djatoka_service', 'http://dl-img.home.nyu.edu/adore-djatoka');
-  variable_set('mediacommons_image_extended_djatoka_metadataurl', 'http://dl-img.home.nyu.edu/adore-djatoka?');
-  variable_set('mediacommons_image_extended_openlayers',  
+  variable_set('mediacommons_imageextended_djatoka_service_host', 'http://dl-img.home.nyu.edu/adore-djatoka');
+  variable_set('mediacommons_imageextended_djatoka_service', 'http://dl-img.home.nyu.edu/adore-djatoka');
+  variable_set('mediacommons_imageextended_djatoka_metadataurl', 'http://dl-img.home.nyu.edu/adore-djatoka?');
+  variable_set('mediacommons_imageextended_openlayers',  
     serialize ( array( 
       'plugins' => array( 
         'openurl' => array(
@@ -209,17 +209,17 @@ function mediacommons_image_extended_enable() {
 }
 
 /** Implementation of hook_uninstall(). */
-function mediacommons_image_extended_uninstall() {  
-  variable_del('mediacommons_image_extended_djatoka_service');
-  variable_del('mediacommons_image_extended_djatoka_metadataurl');
-  variable_del('mediacommons_image_extended_advanced_share');
-  variable_del('mediacommons_image_extended_djatoka_service_host');
-  variable_del('mediacommons_image_extended_djatoka_service_path');
-  variable_del('mediacommons_image_extended_djatoka_service_port');
-  variable_del('mediacommons_image_extended_djatoka_service_url');
-  variable_del('mediacommons_image_extended_openlayers');
-  variable_del('mediacommons_image_extended_openlayers_format');
-  variable_del('mediacommons_image_extended_openlayers_openurl');
-  variable_del('mediacommons_image_extended_openlayer_metadaurl_service');
-  variable_del('mediacommons_image_extended_openlayer_target');
+function mediacommons_imageextended_uninstall() {  
+  variable_del('mediacommons_imageextended_djatoka_service');
+  variable_del('mediacommons_imageextended_djatoka_metadataurl');
+  variable_del('mediacommons_imageextended_advanced_share');
+  variable_del('mediacommons_imageextended_djatoka_service_host');
+  variable_del('mediacommons_imageextended_djatoka_service_path');
+  variable_del('mediacommons_imageextended_djatoka_service_port');
+  variable_del('mediacommons_imageextended_djatoka_service_url');
+  variable_del('mediacommons_imageextended_openlayers');
+  variable_del('mediacommons_imageextended_openlayers_format');
+  variable_del('mediacommons_imageextended_openlayers_openurl');
+  variable_del('mediacommons_imageextended_openlayer_metadaurl_service');
+  variable_del('mediacommons_imageextended_openlayer_target');
 }

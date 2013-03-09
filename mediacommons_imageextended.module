@@ -5,11 +5,11 @@
  * dlts_image core hooks and menu callbacks.
  */
 
-module_load_include('inc', 'mediacommons_image_extended', 'includes/mediacommons_image_extended.field');
-module_load_include('inc', 'mediacommons_image_extended', 'includes/mediacommons_image_extended.views');
+module_load_include('inc', 'mediacommons_imageextended', 'includes/mediacommons_imageextended.field');
+module_load_include('inc', 'mediacommons_imageextended', 'includes/mediacommons_imageextended.views');
 
 /** Implements hook_permission(). */
-function mediacommons_image_extended_permission() {
+function mediacommons_imageextended_permission() {
   return array(
     'administer mediacommons' => array(
       'title' => t('Administer MediaCommons'),
@@ -21,15 +21,15 @@ function mediacommons_image_extended_permission() {
 /**
  * Implementation of hook_menu().
  */
-function mediacommons_image_extended_menu() {
+function mediacommons_imageextended_menu() {
   return array(
     'admin/config/media/mediacommons' => array(
       'title' => t('Image extended'),
       'description' => t('Provides an extended Image Field for controling display, support for high-resolution images and set default representation for attached images.'),
       'page callback' => 'drupal_get_form',
-      'page arguments' => array('mediacommons_image_extended_admin'),
+      'page arguments' => array('mediacommons_imageextended_admin'),
       'access arguments' => array('administer dlts'),
-      'file' => 'includes/mediacommons_image_extended.admin.inc',
+      'file' => 'includes/mediacommons_imageextended.admin.inc',
     ),
   );
 }
@@ -37,57 +37,57 @@ function mediacommons_image_extended_menu() {
 /**
  * Implements hook_theme().
  */
-function mediacommons_image_extended_theme($existing, $type, $theme, $path) {
+function mediacommons_imageextended_theme($existing, $type, $theme, $path) {
   return array(
-    'mediacommons_image_extended_hires' => array(
+    'mediacommons_imageextended_hires' => array(
       'variables' => array(
         'file' => NULL,
       ),
-      'file' => 'includes/mediacommons_image_extended.theme.inc',
+      'file' => 'includes/mediacommons_imageextended.theme.inc',
     ),
-    'mediacommons_image_extended_admin_thumbnail' => array(
+    'mediacommons_imageextended_admin_thumbnail' => array(
       'variables' => array(
         'file' => NULL,
       ),
-      'file' => 'includes/mediacommons_image_extended.theme.inc',
+      'file' => 'includes/mediacommons_imageextended.theme.inc',
     ),
-    'mediacommons_image_extended_thumbnail' => array(
+    'mediacommons_imageextended_thumbnail' => array(
       'variables' => array(
         'file' => NULL,
       ),
-      'file' => 'includes/mediacommons_image_extended.theme.inc',
+      'file' => 'includes/mediacommons_imageextended.theme.inc',
     ),
-    'mediacommons_image_extended_thumbnail_nodelink' => array(
+    'mediacommons_imageextended_thumbnail_nodelink' => array(
       'variables' => array(
         'file' => NULL,
       ),
-      'file' => 'includes/mediacommons_image_extended.theme.inc',
+      'file' => 'includes/mediacommons_imageextended.theme.inc',
     ),
-    'mediacommons_image_extended_original' => array(
+    'mediacommons_imageextended_original' => array(
       'variables' => array(
         'file' => NULL,
       ),
-      'file' => 'includes/mediacommons_image_extended.theme.inc',
+      'file' => 'includes/mediacommons_imageextended.theme.inc',
     ),
-    'mediacommons_image_extended_representative_image' => array(
+    'mediacommons_imageextended_representative_image' => array(
       'variables' => array(
         'file' => NULL,
       ),
-      'file' => 'includes/mediacommons_image_extended.theme.inc',
+      'file' => 'includes/mediacommons_imageextended.theme.inc',
     ),
-    'mediacommons_image_extended_widget' => array(
+    'mediacommons_imageextended_widget' => array(
       'render element' => 'element',
-      'file' => 'includes/mediacommons_image_extended.theme.inc',
+      'file' => 'includes/mediacommons_imageextended.theme.inc',
     ),      
   );
 }
 
-function mediacommons_image_extended_image_default_styles() {
+function mediacommons_imageextended_image_default_styles() {
   return array(
     'thumbnail_imageextended' => array(
       'effects' => array(
         array(
-          'name' => 'mediacommons_image_extended_tojpg',
+          'name' => 'mediacommons_imageextended_tojpg',
           'data' => array(),
           'weight' => 0,
         ),
@@ -96,19 +96,19 @@ function mediacommons_image_extended_image_default_styles() {
   );
 }
 
-function mediacommons_image_extended_image_effect_info() {
+function mediacommons_imageextended_image_effect_info() {
   return array(
-    'mediacommons_image_extended_tojpg' => array(
+    'mediacommons_imageextended_tojpg' => array(
       'label' => t('Image to JPG'),
       'help' => t('Transform image to a JPG.'),
-      'effect callback' => 'mediacommons_image_extended_tojpg',
+      'effect callback' => 'mediacommons_imageextended_tojpg',
     ),
   );
 }
 
-function mediacommons_image_extended_tojpg($image, $x, $y, $width, $height) {
+function mediacommons_imageextended_tojpg($image, $x, $y, $width, $height) {
   
-  dpm('mediacommons_image_extended_tojpg');
+  dpm('mediacommons_imageextended_tojpg');
   
   $aspect = $image->info['height'] / $image->info['width'];
   if (empty($height)) {

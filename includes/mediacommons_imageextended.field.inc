@@ -9,11 +9,11 @@
 // http://api.drupal.org/api/drupal/modules%21image%21image.module/function/theme_image_style/7
 
 // make this a dependency
-module_load_include('inc', 'mediacommons_image_extended', 'includes/mediacommons_image_extended.djatoka');
+module_load_include('inc', 'mediacommons_imageextended', 'includes/mediacommons_imageextended.djatoka');
 
-function mediacommons_image_extended_field_info() {
+function mediacommons_imageextended_field_info() {
   return array(
-    'mediacommons_image_extended' => array(
+    'mediacommons_imageextended' => array(
       'label' => t('Image extended'),
       'description' => t('This field stores the ID of an image file as an integer value.'),
       'settings' => array(
@@ -25,22 +25,22 @@ function mediacommons_image_extended_field_info() {
         'file_directory' => '',
         'max_filesize' => '',
       ),
-      'default_widget' => 'mediacommons_image_extended',
-      'default_formatter' => 'mediacommons_image_extended_original',
+      'default_widget' => 'mediacommons_imageextended',
+      'default_formatter' => 'mediacommons_imageextended_original',
     ),
   );
 }
 
-function mediacommons_image_extended_field_settings_form($field, $instance) {
+function mediacommons_imageextended_field_settings_form($field, $instance) {
   return image_field_settings_form($field, $instance);
 }
 
-function mediacommons_image_extended_field_is_empty($item, $field) {
+function mediacommons_imageextended_field_is_empty($item, $field) {
   return file_field_is_empty($item, $field);
 }
 
 /** Implements hook_field_instance_settings_form(). */
-function mediacommons_image_extended_field_instance_settings_form($field, $instance) {
+function mediacommons_imageextended_field_instance_settings_form($field, $instance) {
   
   /** Use the file field instance settings form */
   $form = file_field_instance_settings_form($field, $instance);
@@ -55,7 +55,7 @@ function mediacommons_image_extended_field_instance_settings_form($field, $insta
   
 }
 
-function mediacommons_image_extended_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+function mediacommons_imageextended_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
 
   /** Add display_field setting to field because file_field_widget_form() assumes it is set. */
   $field['settings']['display_field'] = 0;
@@ -64,7 +64,7 @@ function mediacommons_image_extended_field_widget_form(&$form, &$form_state, $fi
   
   $settings = $instance['settings'];
   
-  $supported_extensions = _mediacommons_image_extended_files_supported(); 
+  $supported_extensions = _mediacommons_imageextended_files_supported(); 
   
   foreach (element_children($elements) as $delta) {
     
@@ -72,7 +72,7 @@ function mediacommons_image_extended_field_widget_form(&$form, &$form_state, $fi
     $elements[$delta]['#upload_validators']['file_validate_extensions'][0] = implode(' ', $supported_extensions);
     
     /** Add all extra functionality provided by the image widget. */
-    $elements[$delta]['#process'][] = 'mediacommons_image_extended_field_widget_process';
+    $elements[$delta]['#process'][] = 'mediacommons_imageextended_field_widget_process';
     
   }
   
@@ -90,11 +90,11 @@ function mediacommons_image_extended_field_widget_form(&$form, &$form_state, $fi
   return $elements;
 }
 
-function mediacommons_image_extended_field_load($entity_type, $entities, $field, $instances, $langcode, &$items, $age) {
+function mediacommons_imageextended_field_load($entity_type, $entities, $field, $instances, $langcode, &$items, $age) {
   file_field_load($entity_type, $entities, $field, $instances, $langcode, $items, $age);
 }
 
-function mediacommons_image_extended_field_widget_process($element, &$form_state, $form) {
+function mediacommons_imageextended_field_widget_process($element, &$form_state, $form) {
 
   $variables = array();
   $item = $element['#value'];
@@ -102,7 +102,7 @@ function mediacommons_image_extended_field_widget_process($element, &$form_state
   $instance = field_widget_instance($element, $form_state);
   $settings = $instance['settings'];
   $widget_settings = $instance['widget']['settings'];
-  $element['#theme'] = 'mediacommons_image_extended_widget';
+  $element['#theme'] = 'mediacommons_imageextended_widget';
   
   /** Add image CSS */
   // $element['#attached']['css'][] = drupal_get_path('module', 'image') . '/image.css';
@@ -110,7 +110,7 @@ function mediacommons_image_extended_field_widget_process($element, &$form_state
   /** Add the image preview. */
   if ($element['#file']) {
     
-    $variables['style_name'] = $widget_settings['preview_image_style']; // mediacommons_image_extended_tojpg
+    $variables['style_name'] = $widget_settings['preview_image_style']; // mediacommons_imageextended_tojpg
     $variables['path'] = $element['#file']->uri;
     
     /** Determine image dimensions and metadata. If extended_*  is available, the others will also be available */
@@ -130,7 +130,7 @@ function mediacommons_image_extended_field_widget_process($element, &$form_state
     /** call image server */ 
     else {
       
-      $djatoka = mediacommons_image_extended_djatoka_request($element['#file']);
+      $djatoka = mediacommons_imageextended_djatoka_request($element['#file']);
       
       /** image server is available */
       if (!isset($djatoka['error'])) {
@@ -151,7 +151,7 @@ function mediacommons_image_extended_field_widget_process($element, &$form_state
         /** dpm($element['#value']['width']); */
         /** dpm($element['#value']['height']); */
 
-        form_set_error('mediacommons_image_extended', t('Error requesting image metadata from Djakota service. @message (error code @code).', array('@message' => $djatoka['message'], '@error' => $djatoka['error'])));
+        form_set_error('mediacommons_imageextended', t('Error requesting image metadata from Djakota service. @message (error code @code).', array('@message' => $djatoka['message'], '@error' => $djatoka['error'])));
         
         $variables['extended_width'] = 
         $variables['extended_height'] =  
@@ -253,11 +253,11 @@ function mediacommons_image_extended_field_widget_process($element, &$form_state
 }
 
 /** Implements hook_field_widget_info() */
-function mediacommons_image_extended_field_widget_info() {
+function mediacommons_imageextended_field_widget_info() {
   return array(
-    'mediacommons_image_extended' => array(
+    'mediacommons_imageextended' => array(
       'label' => t('Image extended'),
-      'field types' => array('mediacommons_image_extended'),
+      'field types' => array('mediacommons_imageextended'),
       'settings' => array(
         'progress_indicator' => 'throbber',
         'preview_image_style' => 'thumbnail',
@@ -271,38 +271,38 @@ function mediacommons_image_extended_field_widget_info() {
 }
 
 /** Implements hook_field_widget_settings_form() */
-function mediacommons_image_extended_field_widget_settings_form($field, $instance) {
+function mediacommons_imageextended_field_widget_settings_form($field, $instance) {
   return image_field_widget_settings_form($field, $instance);
 }
 
 /**
  * Implements hook_field_formatter_info().
  */
-function mediacommons_image_extended_field_formatter_info() {
+function mediacommons_imageextended_field_formatter_info() {
   return array(
-    'mediacommons_image_extended_hires' => array(
+    'mediacommons_imageextended_hires' => array(
       'label' => t('Image extended Hi-Res'),
-      'field types' => array('mediacommons_image_extended'),
+      'field types' => array('mediacommons_imageextended'),
       'description' => t('Displays image files in their original size.'),
     ),
-    'mediacommons_image_extended_thumbnail' => array(
+    'mediacommons_imageextended_thumbnail' => array(
       'label' => t('Image extended Thumbnail Image'),
-      'field types' => array('mediacommons_image_extended'),
+      'field types' => array('mediacommons_imageextended'),
       'description' => t('Displays image files in their thumbnail size.'),
     ),
-    'mediacommons_image_extended_thumbnail_nodelink' => array(
+    'mediacommons_imageextended_thumbnail_nodelink' => array(
       'label' => t('Image extended Thumbnail Image linked to node'),
-      'field types' => array('mediacommons_image_extended'),
+      'field types' => array('mediacommons_imageextended'),
       'description' => t('Displays image files in their thumbnail size.'),
     ),
-    'mediacommons_image_extended_original' => array(
+    'mediacommons_imageextended_original' => array(
       'label' => t('Image extended'),
-      'field types' => array('mediacommons_image_extended'),
+      'field types' => array('mediacommons_imageextended'),
       'description' => t('Displays image file'),
     ),
-    'mediacommons_image_extended_representative_image' => array(
+    'mediacommons_imageextended_representative_image' => array(
       'label' => t('Representative image'),
-      'field types' => array('mediacommons_image_extended'),
+      'field types' => array('mediacommons_imageextended'),
       'description' => t('Displays representative image'),
     ),      
   );
@@ -311,7 +311,7 @@ function mediacommons_image_extended_field_formatter_info() {
 /**
  * Implments hook_field_formatter_view().
  */
-function mediacommons_image_extended_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+function mediacommons_imageextended_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
   foreach ($items as $delta => $item) {
     $item['nid'] = $entity->nid;
@@ -323,7 +323,7 @@ function mediacommons_image_extended_field_formatter_view($entity_type, $entity,
   return $element;
 }
 
-function _mediacommons_image_extended_files_supported() {
+function _mediacommons_imageextended_files_supported() {
   return array(
     'tiff',
     'tif',

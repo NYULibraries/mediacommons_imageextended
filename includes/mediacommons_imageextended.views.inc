@@ -13,7 +13,7 @@
  *
  * This hook can be utilized by themes.
  */
-function mediacommons_image_extended_views_pre_render(&$view) {
+function mediacommons_imageextended_views_pre_render(&$view) {
   if ($view->name == 'image') {
     foreach ($view->result as $a => $result) {
       if (isset($result->field_field_image_extended)) {

@@ -5,7 +5,7 @@
  * DLTS Image theme functions
  */
 
-module_load_include('inc', 'mediacommons_image_extended', 'includes/mediacommons_image_extended.file');
+module_load_include('inc', 'mediacommons_imageextended', 'includes/mediacommons_imageextended.file');
 
 /**
  * Returns HTML for a high-resolution JPEG 2000 image.
@@ -16,22 +16,22 @@ module_load_include('inc', 'mediacommons_image_extended', 'includes/mediacommons
  *
  * @ingroup themable
  */
-function theme_mediacommons_image_extended_hires($variables) {
+function theme_mediacommons_imageextended_hires($variables) {
   
   dpm(__FUNCTION__);
   
   $file = $variables['file'];
-  $module_path = drupal_get_path('module', 'mediacommons_image_extended');
+  $module_path = drupal_get_path('module', 'mediacommons_imageextended');
   $fid = 'id-'. $file['fid'];
   $fileUri = file_create_url($file['uri']);
-  drupal_add_css($module_path . '/css/mediacommons_image_extended.css');
+  drupal_add_css($module_path . '/css/mediacommons_imageextended.css');
   
   /** Add Openlayers to the page */
-  drupal_add_js( variable_get( 'mediacommons_image_extended_openlayers_source', 'sites/all/libraries/openlayers/lib/OpenLayers.js'), array('group' => JS_LIBRARY));
+  drupal_add_js( variable_get( 'mediacommons_imageextended_openlayers_source', 'sites/all/libraries/openlayers/lib/OpenLayers.js'), array('group' => JS_LIBRARY));
 
   $openlayers_options = array(
     'zoom' => (isset($file['zoom'])) ? $file['zoom'] : 1,
-    'service' => variable_get('mediacommons_image_extended_extended_service', ''),
+    'service' => variable_get('mediacommons_imageextended_extended_service', ''),
     'imgMetadata' => array(
       'width' => $file['extended_width'],
       'height' => $file['extended_height'],
@@ -55,10 +55,10 @@ function theme_mediacommons_image_extended_hires($variables) {
   
   drupal_add_js($js_inline, $js_options);  
   
-  return '<div id="id-' . $file['fid'] . '" class="mediacommons_image_extended_map" data-uri="'. $fileUri . '"></div>';
+  return '<div id="id-' . $file['fid'] . '" class="mediacommons_imageextended_map" data-uri="'. $fileUri . '"></div>';
 }
 
-function theme_mediacommons_image_extended_thumbnail($variables) {
+function theme_mediacommons_imageextended_thumbnail($variables) {
   dpm(__FUNCTION__);
   
   $item = $variables['file'];
@@ -69,7 +69,7 @@ function theme_mediacommons_image_extended_thumbnail($variables) {
   }
 
   $variables = array(
-    'path' => mediacommons_image_extended_file_path($item, TRUE),
+    'path' => mediacommons_imageextended_file_path($item, TRUE),
     'alt' => '',
     'title' => '',
     'attributes' => array('class' => $classes),
@@ -77,17 +77,17 @@ function theme_mediacommons_image_extended_thumbnail($variables) {
   return theme('image', $variables);
 }
 
-function theme_mediacommons_image_extended_thumbnail_nodelink($variables) {
+function theme_mediacommons_imageextended_thumbnail_nodelink($variables) {
   dpm(__FUNCTION__);
-  return l(theme('mediacommons_image_extended_thumbnail', $variables), url('node/' . $variables['file']['nid'], array('absolute' => TRUE)), array('html' => TRUE));
+  return l(theme('mediacommons_imageextended_thumbnail', $variables), url('node/' . $variables['file']['nid'], array('absolute' => TRUE)), array('html' => TRUE));
 }
 
-function theme_mediacommons_image_extended_admin_thumbnail($variables) {
+function theme_mediacommons_imageextended_admin_thumbnail($variables) {
   dpm(__FUNCTION__);
-  return theme('mediacommons_image_extended_thumbnail', $variables);
+  return theme('mediacommons_imageextended_thumbnail', $variables);
 }
 
-function theme_mediacommons_image_extended_original($variables) {
+function theme_mediacommons_imageextended_original($variables) {
   
   dpm(__FUNCTION__);
   
@@ -100,7 +100,7 @@ function theme_mediacommons_image_extended_original($variables) {
   }
 
   $variables = array(
-    'path' => mediacommons_image_extended_file_path($item, TRUE, 'original'),
+    'path' => mediacommons_imageextended_file_path($item, TRUE, 'original'),
     'alt' => '',
     'title' => '',
     'attributes' => array('class' => $classes),
@@ -110,7 +110,7 @@ function theme_mediacommons_image_extended_original($variables) {
 }
 
 
-function theme_mediacommons_image_extended_widget($variables) {
+function theme_mediacommons_imageextended_widget($variables) {
   
   dpm(__FUNCTION__);
   
@@ -139,7 +139,7 @@ function theme_mediacommons_image_extended_widget($variables) {
 }
 
 
-function theme_mediacommons_image_extended_representative_image($variables) {
+function theme_mediacommons_imageextended_representative_image($variables) {
   
   dpm(__FUNCTION__);
   
@@ -155,7 +155,7 @@ function theme_mediacommons_image_extended_representative_image($variables) {
   $classes = array('extended_ri',);
   
   $variables = array(
-    'path' => mediacommons_image_extended_file_path($item, TRUE, 'original'),
+    'path' => mediacommons_imageextended_file_path($item, TRUE, 'original'),
     'alt' => '',
     'title' => '',
     'attributes' => array('class' => $classes),

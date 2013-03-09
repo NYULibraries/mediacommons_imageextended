@@ -18,16 +18,16 @@
  * @see drupal_json_output
  */
 
-function mediacommons_image_extended_getMetadata($resource) {
-  return mediacommons_image_extended_djatoka_request( ( ( $item = file_load( $resource ) ) ?  $item : mediacommons_image_extended_resolve($resource) ) , 'info:lanl-repo/svc/getMetadata');
+function mediacommons_imageextended_getMetadata($resource) {
+  return mediacommons_imageextended_djatoka_request( ( ( $item = file_load( $resource ) ) ?  $item : mediacommons_imageextended_resolve($resource) ) , 'info:lanl-repo/svc/getMetadata');
 }
 
-function mediacommons_image_extended_djatoka_ping() {
-  return mediacommons_image_extended_djatoka_request( array( 'uri' => drupal_get_path('module', 'mediacommons_image_extended') . '/img/djatoka-ping.jp2' ), 'info:lanl-repo/svc/ping');
+function mediacommons_imageextended_djatoka_ping() {
+  return mediacommons_imageextended_djatoka_request( array( 'uri' => drupal_get_path('module', 'mediacommons_imageextended') . '/img/djatoka-ping.jp2' ), 'info:lanl-repo/svc/ping');
 }
 
 /** Validate URL. For now a hack */
-function mediacommons_image_extended_resolve($fid) {
+function mediacommons_imageextended_resolve($fid) {
   // find if we have a valid URL.
   if ( $fid === '0' ) {
    return array(
@@ -37,13 +37,13 @@ function mediacommons_image_extended_resolve($fid) {
   return FALSE;
 }
 
-function mediacommons_image_extended_djatoka_request($file) {
+function mediacommons_imageextended_djatoka_request($file) {
   $file = (object) $file;
 
-  $request = url(variable_get('mediacommons_image_extended_djatoka_service', '') . '/resolver', array(
+  $request = url(variable_get('mediacommons_imageextended_djatoka_service', '') . '/resolver', array(
       'query' => array(
-          'url_ver' => variable_get('mediacommons_image_extended_openlayers_openurl', 'Z39.88-2004'),
-          'svc_id' => variable_get('mediacommons_image_extended_openlayer_metadaurl_service', 'info:lanl-repo/svc/getMetadata'),
+          'url_ver' => variable_get('mediacommons_imageextended_openlayers_openurl', 'Z39.88-2004'),
+          'svc_id' => variable_get('mediacommons_imageextended_openlayer_metadaurl_service', 'info:lanl-repo/svc/getMetadata'),
           'rft_id' => file_create_url($file->uri),
       ),
       'absolute' => TRUE)

@@ -1,13 +1,13 @@
 name = MediaCommons Image Extended
 description = Image field widgets and formatters.
 package = MediaCommons
-project = "mediacommons_image_extended"
+project = "mediacommons_imageextended"
 
 dependencies[] = libraries
 dependencies[] = image
 dependencies[] = imagemagick
 
-files[] = includes/mediacommons_image_extended.views.inc
+files[] = includes/mediacommons_imageextended.views.inc
 
 configure = admin/config/media/mediacommons
 
